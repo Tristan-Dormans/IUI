@@ -1,0 +1,4 @@
+5 sausages
+10 apples
+9 bananas
+3 breads
