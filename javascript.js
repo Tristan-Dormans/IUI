@@ -2,7 +2,7 @@ function loadPantry() {
     const pantryList = document.querySelector('#pantryList');
     pantryList.innerHTML = ''; // Clear existing items
   
-    fetch('pantry.txt') // Replace 'pantry.txt' with your file name
+    fetch('./pantry.txt') // Replace 'pantry.txt' with your file name
       .then(response => response.text())
       .then(data => {
         const items = data.split('\n');
