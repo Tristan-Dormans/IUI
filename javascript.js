@@ -1,22 +1,6 @@
-currentWeekNumber = 10
-
-function getCurrentWeek() {
-  const today = new Date();
-  const firstDayOfWeek = today.getDate() - today.getDay() + 1;
-  const lastDayOfWeek = firstDayOfWeek + 6;
-  const weekNumber = currentWeekNumber; // Use the currentWeekNumber variable
-  const weekDates = [];
-
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(today.getFullYear(), today.getMonth(), firstDayOfWeek + i + (weekNumber - 1) * 7);
-    weekDates.push(date.toLocaleDateString());
-  }
-
-  return { weekNumber, weekDates };
-}
-
 function updateCalendar() {
-  const { weekNumber, weekDates } = getCurrentWeek();
+  const today = new Date();
+  const { weekDates } = getCurrentWeek(currentWeekNumber);
   const scheduleGrid = document.querySelector('.schedule-grid');
   const dayElements = scheduleGrid.children;
   let events = JSON.parse(localStorage.getItem('events')) || [];
@@ -30,7 +14,7 @@ function updateCalendar() {
 
     // Create a new <a> tag
     const anchorTag = document.createElement('a');
-    anchorTag.href = `./day.html?${dayHeader.textContent.toLowerCase().replace(" ","").replace(" ","")}`;
+    anchorTag.href = `./day.html?${dayHeader.textContent.toLowerCase().replace(/ /g, "")}`;
 
     // Get the parent element of the <h3> element
     const parentElement = dayHeader.parentNode;
@@ -40,7 +24,7 @@ function updateCalendar() {
     anchorTag.appendChild(dayHeader);
 
     // Display events for this day
-    const eventsForDay = events.filter(event => event.date === dayHeader.textContent.toLowerCase().replace(" ","").replace(" ",""));
+    const eventsForDay = events.filter(event => event.date === dayHeader.textContent.toLowerCase().replace(/ /g, ""));
     const eventList = document.createElement('ul');
     eventList.style.fontSize = '0.8em'; // Reduce font size
     eventsForDay.forEach(event => {
@@ -53,10 +37,44 @@ function updateCalendar() {
       eventList.appendChild(eventItem);
     });
     dayElement.appendChild(eventList);
-}
+  }
 
   const weekHeader = document.querySelector('h2');
-  weekHeader.textContent = `Your Weekly Schedule - Week ${weekNumber}`;
+  weekHeader.textContent = `Your Weekly Schedule - Week ${currentWeekNumber}`;
+}
+
+function getCurrentWeek(weekNumber) {
+  const today = new Date();
+  
+  // Calculate the first day of the given week number
+  const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+  const firstDayOfWeek = getFirstDayOfWeek(new Date(firstDayOfYear.getFullYear(), firstDayOfYear.getMonth(), firstDayOfYear.getDate() + (weekNumber - 1) * 7));
+
+  const weekDates = [];
+
+  // Push each day of the week (from Monday to Sunday)
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate() + i);
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-GB', options); // Format the date to dd.mm.yyyy
+    weekDates.push(formattedDate);
+  }
+
+  return { weekNumber, weekDates };
+}
+
+function getFirstDayOfWeek(date) {
+  const dayOfWeek = date.getDay(); // Get the current day of the week (0 - Sunday, 6 - Saturday)
+  const firstDayOfWeek = new Date(date);
+  const dayOffset = (dayOfWeek === 0 ? 6 : dayOfWeek - 1); // Set Monday as the first day (Sunday is handled as 6)
+  firstDayOfWeek.setDate(date.getDate() - dayOffset);
+  return firstDayOfWeek;
+}
+
+function getWeekNumber(date) {
+  const oneJan = new Date(date.getFullYear(), 0, 1);
+  const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+  return Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7); // Calculate the week number
 }
 
 function clearDayHeaders(dayElements) {
@@ -80,12 +98,13 @@ function goToNextWeek() {
 }
 
 function goToPreviousWeek() {
-  console.log("test")
   currentWeekNumber--;
   updateCalendar();
 }
 
 window.onload = function () {
+  const today = new Date();
+  currentWeekNumber = getWeekNumber(today);
   updateCalendar();
   document.getElementById("next-week").addEventListener('click', goToNextWeek);
   document.getElementById("prev-week").addEventListener('click', goToPreviousWeek);

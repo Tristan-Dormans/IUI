@@ -22,8 +22,11 @@ for (let i = 0; i < 24; i++) {
   
     // Load the events from local storage
     let events = JSON.parse(localStorage.getItem('events')) || [];
+  
     // Filter events for this hour and date
-    const eventsForHour = events.filter(e => (e.startTime <= i && e.endTime > i) && e.date === extractLastTenChars(window.location.href));
+    const eventsForHour = events.filter(e => {
+      return (e.startTime <= i && e.endTime !== i && e.endTime >= i) && e.date === extractLastTenChars(window.location.href);
+    });
     // Display events for this hour
     eventsForHour.forEach(event => {
       const eventDiv = document.createElement('div');
@@ -100,6 +103,7 @@ document.getElementById('add-event').addEventListener('click', (e) => {
 
     // Load the events from local storage
     let events = JSON.parse(localStorage.getItem('events')) || [];
+    console.log(events)
 
     // Add the event to the events array
     events.push(event);
@@ -138,13 +142,4 @@ for (let i = 0; i < 24; i++) {
   endTimeOption.value = i;
   endTimeOption.textContent = `${i}:00`;
   endTimeSelect.appendChild(endTimeOption);
-}
-
-// Create the hours dropdown menu
-const hourSelect = document.getElementById('hour');
-for (let i = 0; i < 24; i++) {
-  const hourOption = document.createElement('option');
-  hourOption.value = i;
-  hourOption.textContent = `${i}:00`;
-  hourSelect.appendChild(hourOption);
 }
