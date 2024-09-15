@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day View</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="date"></h1>
+    <div id="hours"></div>
+    <form id="event-form">
+        <label for="event-name">Event Name:</label>
+        <input type="text" id="event-name" name="event-name"><br><br>
+        <label for="recipe">Recipe:</label>
+        <select id="recipe" name="recipe"></select><br><br>
+        <label for="color">Color:</label>
+        <input type="color" id="color" name="color" value="#ffffff"><br><br>
+        <label for="hour">Hour:</label>
+        <select id="hour" name="hour"></select><br><br>
+        <button id="add-event">Add Event</button>
+    </form>
+    <div id="events"></div>
+
+    <script src="day.js"></script>
+</body>
+</html>
