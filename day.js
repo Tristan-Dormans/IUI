@@ -5,11 +5,6 @@ const date = extractLastTenChars(window.location.href)
 // Set the date in the header
 document.getElementById('date').textContent = date;
 
-// Create the hours
-// Create the hours
-// Create the hours
-// Create the hours
-// Create the hours
 for (let i = 0; i < 24; i++) {
     const hourContainer = document.createElement('div');
     hourContainer.style.display = 'flex';
@@ -28,7 +23,7 @@ for (let i = 0; i < 24; i++) {
     // Load the events from local storage
     let events = JSON.parse(localStorage.getItem('events')) || [];
     // Filter events for this hour and date
-    const eventsForHour = events.filter(e => e.hour === i.toString() && e.date === extractLastTenChars(window.location.href));
+    const eventsForHour = events.filter(e => (e.startTime <= i && e.endTime > i) && e.date === extractLastTenChars(window.location.href));
     // Display events for this hour
     eventsForHour.forEach(event => {
       const eventDiv = document.createElement('div');
@@ -36,7 +31,7 @@ for (let i = 0; i < 24; i++) {
       eventDiv.style.padding = '5px';
       eventDiv.style.borderRadius = '5px';
       eventDiv.style.marginTop = '5px';
-      eventDiv.style.width = 'calc(10% - 50px)';
+      eventDiv.style.width = 'calc(12% - 50px)';
   
       const eventText = document.createElement('span');
       eventText.textContent = `${event.name} - ${event.recipe}`;
@@ -44,7 +39,7 @@ for (let i = 0; i < 24; i++) {
       eventText.style.marginRight = '10px';
   
       const timeSpan = document.createElement('span');
-      timeSpan.textContent = `${event.hour}:00`;
+      timeSpan.textContent = `${event.startTime}:00 - ${event.endTime}:00`;
       timeSpan.style.display = 'inline-block';
   
       eventDiv.appendChild(eventText);

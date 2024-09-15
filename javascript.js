@@ -1,29 +1,5 @@
 currentWeekNumber = 10
 
-function loadPantry() {
-  const pantryList = document.querySelector('#pantryList');
-  pantryList.innerHTML = ''; // Clear existing items
-
-  fetch('./pantry.txt') // Replace 'pantry.txt' with your file name
-    .then(response => response.text())
-    .then(data => {
-      const items = data.split('\n');
-      items.forEach(item => {
-        if (item.trim() !== '') {
-          const listItem = document.createElement('li');
-          listItem.textContent = item;
-          pantryList.appendChild(listItem);
-        }
-      });
-    })
-    .catch(error => {
-      console.error('Error loading pantry items:', error);
-      const errorItem = document.createElement('li');
-      errorItem.textContent = 'Error loading pantry items!';
-      pantryList.appendChild(errorItem);
-    });
-}
-
 function getCurrentWeek() {
   const today = new Date();
   const firstDayOfWeek = today.getDate() - today.getDay() + 1;
@@ -44,6 +20,7 @@ function updateCalendar() {
   const scheduleGrid = document.querySelector('.schedule-grid');
   const dayElements = scheduleGrid.children;
   let events = JSON.parse(localStorage.getItem('events')) || [];
+  clearDayHeaders(dayElements);
 
   for (let i = 0; i < 7; i++) {
     const dayElement = dayElements[i];
@@ -81,6 +58,22 @@ function updateCalendar() {
   const weekHeader = document.querySelector('h2');
   weekHeader.textContent = `Your Weekly Schedule - Week ${weekNumber}`;
 }
+
+function clearDayHeaders(dayElements) {
+  Array.from(dayElements).forEach(dayElement => {
+    const dayHeader = dayElement.querySelector('h3');
+    dayHeader.textContent = ''; // Clear the text content
+    const anchorTag = dayHeader.parentNode;
+    if (anchorTag.tagName === 'A') {
+      anchorTag.parentNode.replaceChild(dayHeader, anchorTag); // Remove the <a> tag
+    }
+    const eventList = dayElement.querySelector('ul');
+    if (eventList) {
+      dayElement.removeChild(eventList); // Remove the event list
+    }
+  });
+}
+
 function goToNextWeek() {
   currentWeekNumber++;
   updateCalendar();
