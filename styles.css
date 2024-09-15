@@ -87,3 +87,17 @@ body {
 .btn:hover {
     background-color: #ff6f1f;
 }
+
+.event-container {
+    flex-grow: 1;
+    max-width: 300px;
+  }
+  
+  .event-div {
+    background-color: #fff; /* default background color */
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 200px;
+  }
