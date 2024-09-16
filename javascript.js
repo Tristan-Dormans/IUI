@@ -26,6 +26,8 @@ function updateCalendar() {
     // Display events for this day
     const eventsForDay = events.filter(event => event.date === dayHeader.textContent.toLowerCase().replace(/ /g, ""));
     const eventList = document.createElement('ul');
+    eventList.classList.add('event-item');
+    eventList.style.listStyleType = 'none';
     eventList.style.fontSize = '0.8em'; // Reduce font size
     eventsForDay.forEach(event => {
       const eventItem = document.createElement('li');
@@ -34,6 +36,10 @@ function updateCalendar() {
       const startTimeFormatted = `${startTime < 10 ? '0' + startTime : startTime}:00`; // Format startTime as "HH:00"
       const endTimeFormatted = `${endTime < 10 ? '0' + endTime : endTime}:00`; // Format endTime as "HH:00"
       eventItem.textContent = `${event.name} - ${event.recipe} - ${startTimeFormatted} - ${endTimeFormatted}`; // Show start and end times
+      eventItem.style.backgroundColor = event.color; // Set the background color of the event item
+      eventItem.style.padding = '5px';
+      eventItem.style.borderRadius = '5px';
+      eventItem.style.marginTop = '5px';
       eventList.appendChild(eventItem);
     });
     dayElement.appendChild(eventList);
