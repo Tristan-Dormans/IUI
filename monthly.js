@@ -7,6 +7,33 @@ let currentDate = new Date();
 const calendarBody = document.getElementById('calendar-body');
 const monthYear = document.getElementById('month-year');
 
+// Get the URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const url = window.location.href;
+
+// Extract the date from the URL parameters
+if (url.includes("?")) {
+    const dateParam = extractLastTenChars(url);
+    const [day, month, year] = dateParam.split('/');
+    const formattedDate = `${year}-${month}-${day}T00:00:00.000Z`;
+    currentDate = new Date(formattedDate);
+  }
+
+
+function extractLastTenChars(str) {
+    // Ensure the input is a string
+    str = String(str);
+    
+    // Check if the string has at least 10 characters
+    if (str.length < 10) {
+      return str; // Return the entire string if it's shorter than 10 chars
+    }
+    
+    // Extract the last 10 characters
+    return str.slice(-10);
+  }
+
+
 // Function to render the calendar for the current month
 function renderCalendar(date) {
     const year = date.getFullYear();

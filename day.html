@@ -7,22 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1 id="date"></h1>
-    <div id="hours"></div>
-    <form id="event-form">
-        <label for="event-name">Event Name:</label>
-        <input type="text" id="event-name" name="event-name"><br><br>
-        <label for="recipe">Recipe:</label>
-        <select id="recipe" name="recipe"></select><br><br>
-        <label for="color">Color:</label>
-        <input type="color" id="color" name="color" value="#ffffff"><br><br>
-        <label for="start-time">Start Time:</label>
-        <select id="start-time" name="start-time"></select><br><br>
-        <label for="end-time">End Time:</label>
-        <select id="end-time" name="end-time"></select><br><br>
-        <button id="add-event">Add Event</button>
-    </form>
-    <div id="events"></div>
+    <div class="container">
+        <header class="header">
+            <h1 id="date"></h1>
+        </header>
+        <div class="schedule-section">
+            <h2>Schedule</h2>
+            <div id="hours"></div>
+        </div>
+        <form id="event-form">
+            <h2>Add Event</h2>
+            <label for="event-name">Event Name:</label>
+            <input type="text" id="event-name" name="event-name"><br><br>
+            <label for="recipe">Recipe:</label>
+            <select id="recipe" name="recipe"></select><br><br>
+            <label for="color">Color:</label>
+            <input type="color" id="color" name="color" value="#ffffff"><br><br>
+            <label for="start-time">Start Time:</label>
+            <select id="start-time" name="start-time"></select><br><br>
+            <label for="end-time">End Time:</label>
+            <select id="end-time" name="end-time"></select><br><br>
+            <button id="add-event">Add Event</button>
+        </form>
+        <div id="events"></div>
+    </div>
 
     <script src="day.js"></script>
 </body>

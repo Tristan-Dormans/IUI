@@ -9,20 +9,24 @@ for (let i = 0; i < 24; i++) {
     const hourContainer = document.createElement('div');
     hourContainer.style.display = 'flex';
     hourContainer.style.alignItems = 'center';
-  
+    hourContainer.style.padding = '10px';
+    hourContainer.style.borderBottom = '1px solid #ccc';
+
     const hour = document.createElement('div');
     hour.textContent = `${i}:00`;
     hour.style.width = '50px';
     hour.style.textAlign = 'center';
+    hour.style.fontWeight = 'bold';
     hourContainer.appendChild(hour);
-  
+
     // Create an event container for this hour
     const eventContainer = document.createElement('div');
     eventContainer.style.flexGrow = '1';
-  
+    eventContainer.style.paddingLeft = '20px';
+
     // Load the events from local storage
     let events = JSON.parse(localStorage.getItem('events')) || [];
-  
+
     // Filter events for this hour and date
     const eventsForHour = events.filter(e => {
       return (e.startTime <= i && e.endTime !== i && e.endTime >= i) && e.date === extractLastTenChars(window.location.href);
@@ -34,22 +38,25 @@ for (let i = 0; i < 24; i++) {
       eventDiv.style.padding = '5px';
       eventDiv.style.borderRadius = '5px';
       eventDiv.style.marginTop = '5px';
-      eventDiv.style.width = 'calc(12% - 50px)';
-  
+      eventDiv.style.width = 'calc(50% - 5px)';
+      eventDiv.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
       const eventText = document.createElement('span');
       eventText.textContent = `${event.name} - ${event.recipe}`;
       eventText.style.display = 'inline-block';
       eventText.style.marginRight = '10px';
-  
+      eventText.style.fontWeight = 'bold';
+
       const timeSpan = document.createElement('span');
       timeSpan.textContent = `${event.startTime}:00 - ${event.endTime}:00`;
       timeSpan.style.display = 'inline-block';
-  
+      timeSpan.style.color = '#666';
+
       eventDiv.appendChild(eventText);
       eventDiv.appendChild(timeSpan);
       eventContainer.appendChild(eventDiv);
     });
-  
+
     // Append both hour and events to the main container
     hourContainer.appendChild(eventContainer);
     document.getElementById('hours').appendChild(hourContainer);
