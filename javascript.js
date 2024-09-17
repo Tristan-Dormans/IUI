@@ -98,6 +98,39 @@ function clearDayHeaders(dayElements) {
   });
 }
 
+function checkReminders() {
+  const currentTime = new Date();
+  const events = JSON.parse(localStorage.getItem('events')) || [];
+
+  events.forEach(event => {
+    const reminderDate = new Date(event.reminderDate);
+    const reminderTime = reminderDate.getHours() * 60 + reminderDate.getMinutes();
+    const currentTimeHour = currentTime.getHours();
+    const currentTimeMinute = currentTime.getMinutes();
+    const currentDateTime = currentTimeHour * 60 + currentTimeMinute;
+
+    if (reminderDate.getDate() === currentTime.getDate() &&
+        reminderDate.getMonth() === currentTime.getMonth() &&
+        reminderDate.getFullYear() === currentTime.getFullYear() &&
+        reminderTime === currentDateTime) {
+      // Create a popup window
+      const popupWindow = window.open('', '_blank', 'width=400,height=200');
+      const popupHTML = `
+        <h2>Reminder: ${event.name}</h2>
+        <p>${event.recipe}</p>
+        <button onclick="window.close()">Close</button>
+      `;
+      popupWindow.document.write(popupHTML);
+      popupWindow.document.close();
+    }
+  });
+}
+
+// Call the checkReminders function every minute
+setInterval(checkReminders, 5000); // 60000 milliseconds = 1 minute
+
+// ... (rest of the code remains the same)
+
 function goToNextWeek() {
   currentWeekNumber++;
   updateCalendar();

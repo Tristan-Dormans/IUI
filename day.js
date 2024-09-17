@@ -97,6 +97,7 @@ document.getElementById('add-event').addEventListener('click', (e) => {
     const color = document.getElementById('color').value;
     const startTime = document.getElementById('start-time').value;
     const endTime = document.getElementById('end-time').value;
+    const reminderDate = document.getElementById('reminder-date').value;
 
     // Create a new event object
     const event = {
@@ -105,7 +106,8 @@ document.getElementById('add-event').addEventListener('click', (e) => {
         recipe: recipe,
         color: color,
         startTime: startTime,
-        endTime: endTime
+        endTime: endTime,
+        reminderDate: reminderDate
     };
 
     // Load the events from local storage
