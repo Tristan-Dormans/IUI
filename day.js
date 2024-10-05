@@ -1,5 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
-const date = extractLastTenChars(window.location.href)
+const date = extractLastTenChars(window.location.href);
 
 document.getElementById('date').textContent = date;
 
@@ -23,10 +23,17 @@ for (let i = 0; i < 24; i++) {
 
     let events = JSON.parse(localStorage.getItem('events')) || [];
 
+    // Filtering events for the current hour block 'i'
     const eventsForHour = events.filter(e => {
-        return (e.startTime <= i && e.endTime !== i && e.endTime >= i) && e.date === extractLastTenChars(window.location.href);
+        const eventStartTime = parseInt(e.startTime, 10);
+        const eventEndTime = parseInt(e.endTime, 10);
+        
+        // Show events that start at 'i' or overlap into 'i' but do not end at 'i'
+        return eventStartTime <= i && eventEndTime > i && e.date === extractLastTenChars(window.location.href);
     });
-    eventsForHour.forEach(event => {
+
+    // Rendering the filtered events with delete (X) button
+    eventsForHour.forEach((event, eventIndex) => {
         const eventDiv = document.createElement('div');
         eventDiv.style.backgroundColor = event.color;
         eventDiv.style.padding = '5px';
@@ -34,6 +41,7 @@ for (let i = 0; i < 24; i++) {
         eventDiv.style.marginTop = '5px';
         eventDiv.style.width = 'calc(50% - 5px)';
         eventDiv.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        eventDiv.style.position = 'relative';  // To position the X button
 
         const eventText = document.createElement('span');
         eventText.textContent = `${event.name} - ${event.recipe}`;
@@ -46,14 +54,50 @@ for (let i = 0; i < 24; i++) {
         timeSpan.style.display = 'inline-block';
         timeSpan.style.color = '#666';
 
+        // X button to remove the event
+        const deleteButton = document.createElement('span');
+        deleteButton.textContent = 'X';
+        deleteButton.style.color = '#ff0000';
+        deleteButton.style.cursor = 'pointer';
+        deleteButton.style.position = 'absolute';
+        deleteButton.style.top = '5px';
+        deleteButton.style.right = '10px';
+        deleteButton.addEventListener('click', () => {
+            removeEvent(event);  // Call remove event function when X is clicked
+        });
+
+        // Append event details and delete button to eventDiv
         eventDiv.appendChild(eventText);
         eventDiv.appendChild(timeSpan);
+        eventDiv.appendChild(deleteButton);
         eventContainer.appendChild(eventDiv);
     });
 
     hourContainer.appendChild(eventContainer);
     document.getElementById('hours').appendChild(hourContainer);
 }
+
+// Function to remove event from localStorage
+function removeEvent(eventToRemove) {
+    let events = JSON.parse(localStorage.getItem('events')) || [];
+
+    // Filter out the event to be removed
+    events = events.filter(event => {
+        return !(event.date === eventToRemove.date && 
+                 event.startTime === eventToRemove.startTime && 
+                 event.endTime === eventToRemove.endTime && 
+                 event.name === eventToRemove.name);
+    });
+
+    // Save the updated events back to localStorage
+    localStorage.setItem('events', JSON.stringify(events));
+
+    // Reload the page or re-render the events
+    location.reload();  // Reload to reflect the changes in the DOM
+}
+
+
+
 
 let recipes = [];
 fetch('recipes.json')
