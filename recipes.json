@@ -1,46 +1,107 @@
 [
     {
-        "name": "None",
-        "cooking_time": 999
+      "name": "None",
+      "cooking_time": -1,
+      "ingredients": []
     }, 
     {
-        "name": "Chicken soup",
-        "cooking_time": 60
+      "name": "Chicken soup",
+      "cooking_time": 60,
+      "ingredients": [
+        "Chicken",
+        "Carrots",
+        "Celery",
+        "Onion",
+        "Chicken Broth"
+      ]
     },
     {
-        "name": "Hummus Sandwich",
-        "cooking_time": 5
+      "name": "Hummus Sandwich",
+      "cooking_time": 5,
+      "ingredients": [
+        "Chickpeas",
+        "Tahini",
+        "Lemon Juice",
+        "Garlic",
+        "Bread"
+      ]
     },
     {
-        "name": "Lasagna",
-        "cooking_time": 120
+      "name": "Lasagna",
+      "cooking_time": 120,
+      "ingredients": [
+        "Lasagna Noodles",
+        "Ground Beef",
+        "Tomato Sauce",
+        "Mozzarella Cheese",
+        "Parmesan Cheese"
+      ]
     },
     {
-        "name": "Yogurt",
-        "cooking_time": 360
+      "name": "Yogurt",
+      "cooking_time": 3,
+      "ingredients": [
+        "Yogurt"
+      ]
     },
     {
-        "name": "Spaghetti Bolognese",
-        "cooking_time": 90
+      "name": "Spaghetti Bolognese",
+      "cooking_time": 90,
+      "ingredients": [
+        "Spaghetti",
+        "Ground Beef",
+        "Tomato Sauce",
+        "Onion",
+        "Garlic"
+      ]
     },
     {
-        "name": "Grilled Cheese Sandwich",
-        "cooking_time": 20
+      "name": "Grilled Cheese Sandwich",
+      "cooking_time": 20,
+      "ingredients": [
+        "Bread",
+        "Cheese",
+        "Butter"
+      ]
     },
     {
-        "name": "Tacos",
-        "cooking_time": 30
+      "name": "Tacos",
+      "cooking_time": 30,
+      "ingredients": [
+        "Ground Beef",
+        "Tortillas",
+        "Shredded Cheese",
+        "Lettuce",
+        "Tomatoes"
+      ]
     },
     {
-        "name": "Omelette",
-        "cooking_time": 10
+      "name": "Omelette",
+      "cooking_time": 10,
+      "ingredients": [
+        "Eggs",
+        "Cheese",
+        "Butter"
+      ]
     },
     {
-        "name": "Roast Chicken",
-        "cooking_time": 150
+      "name": "Roast Chicken",
+      "cooking_time": 150,
+      "ingredients": [
+        "Chicken Breast",
+        "Olive Oil",
+        "Salt",
+        "Pepper"
+      ]
     },
     {
-        "name": "Pancakes",
-        "cooking_time": 40
+      "name": "Pancakes",
+      "cooking_time": 40,
+      "ingredients": [
+        "Flour",
+        "Sugar",
+        "Eggs",
+        "Milk"
+      ]
     }
-]
+  ]
