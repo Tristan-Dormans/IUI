@@ -1,14 +1,46 @@
 [
     {
-        "name": "Recipe 1"
+        "name": "None",
+        "cooking_time": 999
+    }, 
+    {
+        "name": "Chicken soup",
+        "cooking_time": 60
     },
     {
-        "name": "Recipe 2"
+        "name": "Hummus Sandwich",
+        "cooking_time": 5
     },
     {
-        "name": "Recipe 3"
+        "name": "Lasagna",
+        "cooking_time": 120
     },
     {
-        "name": "None"
+        "name": "Yogurt",
+        "cooking_time": 360
+    },
+    {
+        "name": "Spaghetti Bolognese",
+        "cooking_time": 90
+    },
+    {
+        "name": "Grilled Cheese Sandwich",
+        "cooking_time": 20
+    },
+    {
+        "name": "Tacos",
+        "cooking_time": 30
+    },
+    {
+        "name": "Omelette",
+        "cooking_time": 10
+    },
+    {
+        "name": "Roast Chicken",
+        "cooking_time": 150
+    },
+    {
+        "name": "Pancakes",
+        "cooking_time": 40
     }
 ]

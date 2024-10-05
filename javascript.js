@@ -10,33 +10,28 @@ function updateCalendar() {
     const dayElement = dayElements[i];
     const dayHeader = dayElement.querySelector('h3');
     const dayDate = weekDates[i];
-    dayHeader.textContent = dayDate; // Set the text content to only the new date
+    dayHeader.textContent = dayDate;
 
-    // Create a new <a> tag
     const anchorTag = document.createElement('a');
     anchorTag.href = `./day.html?${dayHeader.textContent.toLowerCase().replace(/ /g, "")}`;
 
-    // Get the parent element of the <h3> element
     const parentElement = dayHeader.parentNode;
-
-    // Wrap the <h3> element with the new <a> tag
     parentElement.replaceChild(anchorTag, dayHeader);
     anchorTag.appendChild(dayHeader);
 
-    // Display events for this day
     const eventsForDay = events.filter(event => event.date === dayHeader.textContent.toLowerCase().replace(/ /g, ""));
     const eventList = document.createElement('ul');
     eventList.classList.add('event-item');
     eventList.style.listStyleType = 'none';
-    eventList.style.fontSize = '0.8em'; // Reduce font size
+    eventList.style.fontSize = '0.8em';
     eventsForDay.forEach(event => {
       const eventItem = document.createElement('li');
-      const startTime = event.startTime; // Assuming startTime is in 24-hour format (e.g. "14")
-      const endTime = event.endTime; // Assuming endTime is in 24-hour format (e.g. "15")
-      const startTimeFormatted = `${startTime < 10 ? '0' + startTime : startTime}:00`; // Format startTime as "HH:00"
-      const endTimeFormatted = `${endTime < 10 ? '0' + endTime : endTime}:00`; // Format endTime as "HH:00"
-      eventItem.textContent = `${event.name} - ${event.recipe} - ${startTimeFormatted} - ${endTimeFormatted}`; // Show start and end times
-      eventItem.style.backgroundColor = event.color; // Set the background color of the event item
+      const startTime = event.startTime;
+      const endTime = event.endTime;
+      const startTimeFormatted = `${startTime < 10 ? '0' + startTime : startTime}:00`;
+      const endTimeFormatted = `${endTime < 10 ? '0' + endTime : endTime}:00`;
+      eventItem.textContent = `${event.name} - ${event.recipe} - ${startTimeFormatted} - ${endTimeFormatted}`;
+      eventItem.style.backgroundColor = event.color;
       eventItem.style.padding = '5px';
       eventItem.style.borderRadius = '5px';
       eventItem.style.marginTop = '5px';
@@ -51,18 +46,14 @@ function updateCalendar() {
 
 function getCurrentWeek(weekNumber) {
   const today = new Date();
-  
-  // Calculate the first day of the given week number
   const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
   const firstDayOfWeek = getFirstDayOfWeek(new Date(firstDayOfYear.getFullYear(), firstDayOfYear.getMonth(), firstDayOfYear.getDate() + (weekNumber - 1) * 7));
 
   const weekDates = [];
-
-  // Push each day of the week (from Monday to Sunday)
   for (let i = 0; i < 7; i++) {
     const date = new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate() + i);
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    const formattedDate = date.toLocaleDateString('en-GB', options); // Format the date to dd.mm.yyyy
+    const formattedDate = date.toLocaleDateString('en-GB', options);
     weekDates.push(formattedDate);
   }
 
@@ -70,9 +61,9 @@ function getCurrentWeek(weekNumber) {
 }
 
 function getFirstDayOfWeek(date) {
-  const dayOfWeek = date.getDay(); // Get the current day of the week (0 - Sunday, 6 - Saturday)
+  const dayOfWeek = date.getDay();
   const firstDayOfWeek = new Date(date);
-  const dayOffset = (dayOfWeek === 0 ? 6 : dayOfWeek - 1); // Set Monday as the first day (Sunday is handled as 6)
+  const dayOffset = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
   firstDayOfWeek.setDate(date.getDate() - dayOffset);
   return firstDayOfWeek;
 }
@@ -80,20 +71,20 @@ function getFirstDayOfWeek(date) {
 function getWeekNumber(date) {
   const oneJan = new Date(date.getFullYear(), 0, 1);
   const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
-  return Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7); // Calculate the week number
+  return Math.ceil((numberOfDays + oneJan.getDay() + 1) / 7);
 }
 
 function clearDayHeaders(dayElements) {
   Array.from(dayElements).forEach(dayElement => {
     const dayHeader = dayElement.querySelector('h3');
-    dayHeader.textContent = ''; // Clear the text content
+    dayHeader.textContent = '';
     const anchorTag = dayHeader.parentNode;
     if (anchorTag.tagName === 'A') {
-      anchorTag.parentNode.replaceChild(dayHeader, anchorTag); // Remove the <a> tag
+      anchorTag.parentNode.replaceChild(dayHeader, anchorTag);
     }
     const eventList = dayElement.querySelector('ul');
     if (eventList) {
-      dayElement.removeChild(eventList); // Remove the event list
+      dayElement.removeChild(eventList);
     }
   });
 }
@@ -113,7 +104,6 @@ function checkReminders() {
         reminderDate.getMonth() === currentTime.getMonth() &&
         reminderDate.getFullYear() === currentTime.getFullYear() &&
         reminderTime === currentDateTime) {
-      // Create a popup window
       const popupWindow = window.open('', '_blank', 'width=400,height=200');
       const popupHTML = `
         <h2>Reminder: ${event.name}</h2>
@@ -126,10 +116,7 @@ function checkReminders() {
   });
 }
 
-// Call the checkReminders function every minute
-setInterval(checkReminders, 5000); // 60000 milliseconds = 1 minute
-
-// ... (rest of the code remains the same)
+setInterval(checkReminders, 5000);
 
 function goToNextWeek() {
   currentWeekNumber++;
