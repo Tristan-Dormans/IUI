@@ -131,9 +131,9 @@ function calculateBusyHours(events) {
     return busyHours;
 }
 
-function suggestRecipe(busyHours) {
+function suggestRecipe(busyHours, startTime) {
     let freeHours = 24 - busyHours;
-  
+
     // Retrieve pantry data from local storage
     const storedPantryData = JSON.parse(localStorage.getItem("pantryData"));
     const pantry = storedPantryData.shelves.reduce((acc, shelf) => {
@@ -154,21 +154,33 @@ function suggestRecipe(busyHours) {
         return daysDifference <= daysThreshold;
       })
       .map(event => event.recipe);
-  
-    // Filter recipes based on pantry items, cooking time, and variety (exclude recently used)
+
+    // Determine the meal type based on the start time
+    const hour = parseInt(startTime);
+    let mealType = "Snack";  // Default to snack if none of the conditions match
+
+    if (hour >= 8 && hour < 11) {
+        mealType = "Breakfast";
+    } else if (hour >= 11 && hour < 14) {
+        mealType = "Lunch";
+    } else if (hour >= 14 && hour < 23) {
+        mealType = "Dinner";
+    }
+
+    // Filter recipes based on pantry items, cooking time, variety, and meal type
     const suitableRecipes = recipes.filter(recipe => {
       const hasIngredients = recipe.ingredients.every(ingredient => pantry.includes(ingredient));
       const isRecentlyUsed = usedRecipes.includes(recipe.name);
-      return hasIngredients && recipe.cooking_time <= freeHours * 60 && !isRecentlyUsed;
+      return hasIngredients && recipe.cooking_time <= freeHours * 60 && !isRecentlyUsed && recipe.meal_type === mealType;
     });
-  
-    // Sort recipes by cooking time (you can modify this for more complex sorting)
-    suitableRecipes.sort((a, b) => b.cooking_time - a.cooking_time);
-  
-    return suitableRecipes.length > 0 ? suitableRecipes[0] : null;
-  }
-  
 
+    // Sort recipes by cooking time
+    suitableRecipes.sort((a, b) => b.cooking_time - a.cooking_time);
+
+    return suitableRecipes.length > 0 ? suitableRecipes[0] : null;
+}
+
+// Add event listener to generate recipe button
 document.getElementById('generate-recipe').addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -176,18 +188,20 @@ document.getElementById('generate-recipe').addEventListener('click', (e) => {
 
     const busyHours = calculateBusyHours(events);
 
-    const suggestedRecipe = suggestRecipe(busyHours);
+    // Get the start time entered by the user
+    let startTime = document.getElementById('start-time').value;
+
+    // Suggest a recipe based on the busy hours and start time
+    const suggestedRecipe = suggestRecipe(busyHours, startTime);
 
     if (suggestedRecipe) {
         // Set the recipe in the form
         document.getElementById('recipe').value = suggestedRecipe.name;
 
-        // Set the start time and end time (assuming we add it at the first available hour)
-        let startTime = document.getElementById('start-time').value;
+        // Set the end time based on cooking time
         let endTime = String(parseInt(startTime) + Math.ceil(suggestedRecipe.cooking_time / 60));
 
-        // Automatically fill the other fields if needed (name, color, etc.)
-        // Now, add this suggested recipe to the schedule
+        // Automatically fill the other fields if needed
         const newEvent = {
             date: date,
             name: `Cooking:`,
@@ -195,7 +209,7 @@ document.getElementById('generate-recipe').addEventListener('click', (e) => {
             color: '#4CAF50',
             startTime: startTime,
             endTime: endTime,
-            reminderDate: date // You can customize this as needed Math.ceil(suggestedRecipe.cooking_time / 60),
+            reminderDate: date
         };
 
         // Save the event to localStorage
@@ -216,11 +230,12 @@ document.getElementById('generate-recipe').addEventListener('click', (e) => {
         });
 
         alert(`Suggested Recipe: ${suggestedRecipe.name} (Cooking time: ${suggestedRecipe.cooking_time} minutes) added to your schedule.`);
-        location.reload()
+        location.reload();
     } else {
         alert('No suitable recipe found for the available time.');
     }
 });
+
 
 document.getElementById('add-event').addEventListener('click', (e) => {
     e.preventDefault();

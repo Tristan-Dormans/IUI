@@ -1,107 +1,118 @@
 [
-    {
-      "name": "None",
-      "cooking_time": -1,
-      "ingredients": []
-    }, 
-    {
-      "name": "Chicken soup",
-      "cooking_time": 60,
-      "ingredients": [
-        "Chicken",
-        "Carrots",
-        "Celery",
-        "Onion",
-        "Chicken Broth"
-      ]
-    },
-    {
-      "name": "Hummus Sandwich",
-      "cooking_time": 5,
-      "ingredients": [
-        "Chickpeas",
-        "Tahini",
-        "Lemon Juice",
-        "Garlic",
-        "Bread"
-      ]
-    },
-    {
-      "name": "Lasagna",
-      "cooking_time": 120,
-      "ingredients": [
-        "Lasagna Noodles",
-        "Ground Beef",
-        "Tomato Sauce",
-        "Mozzarella Cheese",
-        "Parmesan Cheese"
-      ]
-    },
-    {
-      "name": "Yogurt",
-      "cooking_time": 3,
-      "ingredients": [
-        "Yogurt"
-      ]
-    },
-    {
-      "name": "Spaghetti Bolognese",
-      "cooking_time": 90,
-      "ingredients": [
-        "Spaghetti",
-        "Ground Beef",
-        "Tomato Sauce",
-        "Onion",
-        "Garlic"
-      ]
-    },
-    {
-      "name": "Grilled Cheese Sandwich",
-      "cooking_time": 20,
-      "ingredients": [
-        "Bread",
-        "Cheese",
-        "Butter"
-      ]
-    },
-    {
-      "name": "Tacos",
-      "cooking_time": 30,
-      "ingredients": [
-        "Ground Beef",
-        "Tortillas",
-        "Shredded Cheese",
-        "Lettuce",
-        "Tomatoes"
-      ]
-    },
-    {
-      "name": "Omelette",
-      "cooking_time": 10,
-      "ingredients": [
-        "Eggs",
-        "Cheese",
-        "Butter"
-      ]
-    },
-    {
-      "name": "Roast Chicken",
-      "cooking_time": 150,
-      "ingredients": [
-        "Chicken Breast",
-        "Olive Oil",
-        "Salt",
-        "Pepper"
-      ]
-    },
-    {
-      "name": "Pancakes",
-      "cooking_time": 40,
-      "ingredients": [
-        "Flour",
-        "Sugar",
-        "Eggs",
-        "Milk"
-      ]
-    }
-  ]
+  {
+    "name": "None",
+    "cooking_time": -1,
+    "ingredients": [],
+    "meal_type": "None"
+  }, 
+  {
+    "name": "Chicken soup",
+    "cooking_time": 60,
+    "ingredients": [
+      "Chicken",
+      "Carrots",
+      "Celery",
+      "Onion",
+      "Chicken Broth"
+    ],
+    "meal_type": "Dinner"
+  },
+  {
+    "name": "Hummus Sandwich",
+    "cooking_time": 5,
+    "ingredients": [
+      "Chickpeas",
+      "Tahini",
+      "Lemon Juice",
+      "Garlic",
+      "Bread"
+    ],
+    "meal_type": "Snack"
+  },
+  {
+    "name": "Lasagna",
+    "cooking_time": 120,
+    "ingredients": [
+      "Lasagna Noodles",
+      "Ground Beef",
+      "Tomato Sauce",
+      "Mozzarella Cheese",
+      "Parmesan Cheese"
+    ],
+    "meal_type": "Dinner"
+  },
+  {
+    "name": "Yogurt",
+    "cooking_time": 3,
+    "ingredients": [
+      "Yogurt"
+    ],
+    "meal_type": "Snack"
+  },
+  {
+    "name": "Spaghetti Bolognese",
+    "cooking_time": 90,
+    "ingredients": [
+      "Spaghetti",
+      "Ground Beef",
+      "Tomato Sauce",
+      "Onion",
+      "Garlic"
+    ],
+    "meal_type": "Dinner"
+  },
+  {
+    "name": "Grilled Cheese Sandwich",
+    "cooking_time": 20,
+    "ingredients": [
+      "Bread",
+      "Cheese",
+      "Butter"
+    ],
+    "meal_type": "Lunch"
+  },
+  {
+    "name": "Tacos",
+    "cooking_time": 30,
+    "ingredients": [
+      "Ground Beef",
+      "Tortillas",
+      "Shredded Cheese",
+      "Lettuce",
+      "Tomatoes"
+    ],
+    "meal_type": "Dinner"
+  },
+  {
+    "name": "Omelette",
+    "cooking_time": 10,
+    "ingredients": [
+      "Eggs",
+      "Cheese",
+      "Butter"
+    ],
+    "meal_type": "Breakfast"
+  },
+  {
+    "name": "Roast Chicken",
+    "cooking_time": 150,
+    "ingredients": [
+      "Chicken Breast",
+      "Olive Oil",
+      "Salt",
+      "Pepper"
+    ],
+    "meal_type": "Dinner"
+  },
+  {
+    "name": "Pancakes",
+    "cooking_time": 40,
+    "ingredients": [
+      "Flour",
+      "Sugar",
+      "Eggs",
+      "Milk"
+    ],
+    "meal_type": "Breakfast"
+  }
+]
