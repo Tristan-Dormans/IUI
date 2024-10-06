@@ -132,23 +132,42 @@ function calculateBusyHours(events) {
 }
 
 function suggestRecipe(busyHours) {
-  let freeHours = 24 - busyHours;
-
-  // Retrieve pantry data from local storage
-  const storedPantryData = JSON.parse(localStorage.getItem("pantryData"));
-  const pantry = storedPantryData.shelves.reduce((acc, shelf) => {
-    return acc.concat(shelf.items.map(item => item.name));
-  }, []);
-
-  const suitableRecipes = recipes.filter(recipe => {
-    const hasIngredients = recipe.ingredients.every(ingredient => pantry.includes(ingredient));
-    return hasIngredients && recipe.cooking_time <= freeHours * 60;
-  });
-
-  suitableRecipes.sort((a, b) => b.cooking_time - a.cooking_time);
-
-  return suitableRecipes.length > 0 ? suitableRecipes[0] : null;
-}
+    let freeHours = 24 - busyHours;
+  
+    // Retrieve pantry data from local storage
+    const storedPantryData = JSON.parse(localStorage.getItem("pantryData"));
+    const pantry = storedPantryData.shelves.reduce((acc, shelf) => {
+      return acc.concat(shelf.items.map(item => item.name));
+    }, []);
+  
+    let events = JSON.parse(localStorage.getItem("events")) || [];
+  
+    // Get recipes used in the last X days (e.g., last 7 or 30 days)
+    const today = new Date();
+    const daysThreshold = 30;  // Adjust for how many past days to consider
+  
+    const usedRecipes = events
+      .filter(event => {
+        const eventDate = new Date(event.date.split('/').reverse().join('-'));  // Assuming date is in 'dd/mm/yyyy' format
+        const timeDifference = Math.abs(today - eventDate);
+        const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        return daysDifference <= daysThreshold;
+      })
+      .map(event => event.recipe);
+  
+    // Filter recipes based on pantry items, cooking time, and variety (exclude recently used)
+    const suitableRecipes = recipes.filter(recipe => {
+      const hasIngredients = recipe.ingredients.every(ingredient => pantry.includes(ingredient));
+      const isRecentlyUsed = usedRecipes.includes(recipe.name);
+      return hasIngredients && recipe.cooking_time <= freeHours * 60 && !isRecentlyUsed;
+    });
+  
+    // Sort recipes by cooking time (you can modify this for more complex sorting)
+    suitableRecipes.sort((a, b) => b.cooking_time - a.cooking_time);
+  
+    return suitableRecipes.length > 0 ? suitableRecipes[0] : null;
+  }
+  
 
 document.getElementById('generate-recipe').addEventListener('click', (e) => {
     e.preventDefault();
