@@ -102,9 +102,5 @@ function getEventsForDay(dateString) {
 }
 
 window.onload = function () {
-    if (!localStorage.getItem('events')) {
-        localStorage.setItem('events', JSON.stringify(sampleEvents));
-    }
-
     renderCalendar(currentDate);
 };
